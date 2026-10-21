@@ -1,0 +1,50 @@
+/*
+ * timer.c
+ *
+ *  Created on: Oct 20, 2026
+ *      Author: huynhthuan
+ */
+
+#include "timer.h"
+
+void timer_init(void)
+{
+    TIM2->CR1 &= ~TIM2_CR1_CEN;
+    TIM2->CR1 &= ~TIM2_CR1_DIR;
+
+    /**  Co 4 nguon clock doc lap HSI, HSE, LSI, LSE
+     * 	 Blue pill dung HSE 8MHz, PLL mach nhan/chia clock (x2 x4...x9)
+     * 	 PLL nhan lam Output clock -> Dung PLL nhu nguon clock 8*9 = 72MHz
+     *   -> Neu chua config PLL, mac dinh dung HSE 8MHz
+     *
+     *   PSC = 7
+     *   8 000 000 / 8 = 1 000 000Hz
+     *   T = 1/f = 1/1 000 000 = 0.000001s = 0.001ms
+     *
+     *   ARR = 999
+     *   1 T(chu ky) -> 1tick = 0.001ms
+     *                  10tick = 0.01 ms
+     *                  100tick = 0.1ms
+     *                  1000tick = 1ms
+     * - Lay 1ms, de delay_ms(1000) chinh xac
+     */
+    TIM2->PSC = 8U;
+    TIM2->ARR = 999U;
+
+    TIM2->EGR = TIM2_EGR_UG;
+    TIM2->CR1 |= TIM2_CR1_CEN;
+}
+
+void delay_ms(uint32_t ms)
+{
+    while (ms > 0U)
+    {
+        TIM2->CNT = 0U;
+
+        /* Clear UIF before waiting */
+        TIM2->SR = ~TIM2_SR_UIF;
+
+        while ((TIM2->SR & TIM2_SR_UIF) == 0U);
+        ms--;
+    }
+}
