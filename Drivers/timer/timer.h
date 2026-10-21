@@ -17,18 +17,18 @@
  */
 typedef struct
 {
-    __vo uint32_t CR1;
-    __vo uint32_t CR2;
-    __vo uint32_t SMCR;
-    __vo uint32_t DIER;
-    __vo uint32_t SR;
-    __vo uint32_t EGR;
-    __vo uint32_t CCMR1;
-    __vo uint32_t CCMR2;
-    __vo uint32_t CCER;
-    __vo uint32_t CNT;
-    __vo uint32_t PSC;
-    __vo uint32_t ARR;
+    __vo uint32_t CR1;          // Offset: 0x00
+    __vo uint32_t CR2;          // 0x04
+    __vo uint32_t SMCR;         // 0x08
+    __vo uint32_t DIER;         // 0x0C
+    __vo uint32_t SR;           // 0x10
+    __vo uint32_t EGR;          // 0x14
+    __vo uint32_t CCMR1;        // 0x18
+    __vo uint32_t CCMR2;        // 0x1C
+    __vo uint32_t CCER;         // 0x20
+    __vo uint32_t CNT;          // 0x24
+    __vo uint32_t PSC;          // 0x28
+    __vo uint32_t ARR;          // 0x2C
     /**
      * Register remain unused
      */

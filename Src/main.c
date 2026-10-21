@@ -21,23 +21,54 @@
 #include "../Drivers/gpio/gpio.h"
 #include "../Drivers/timer/timer.h"
 
-int main (void)
+/*-------------------- Hold Button ---------------------------- */
+// while (1)
+// {
+//     if ((GPIOA->IDR & (1U << 0)) != 0U)
+//     {
+//         /* Button pressed: turn both LEDs ON */
+//         GPIOA->BRR = (1U << 9) | (1U << 10);
+//     }
+//     else
+//     {
+//         /* Button released: turn both LEDs OFF */
+//         GPIOA->BSRR = (1U << 9) | (1U << 10);
+//     }
+// }   
+
+/* -------------------- Toggle Button ------------------------- */
+int main(void)
 {
     rcc_init();
     gpio_init();
     timer_init();
 
-    while(1)
+    uint8_t led_state = 0U;
+    uint8_t button_prev = 0U;
+    uint8_t button_now = 0U;
+
+    while (1)
     {
-        /* Reset PA9 PA10 */
-        GPIOA->BSRR = (3UL << 25U);
-        delay_ms(1000);
+        button_now = (GPIOA->IDR & (1U << 0)) != 0U;
 
-        /* Set PA9 PA10 */
-        GPIOA->BSRR = (3UL << 9U);
-        delay_ms(1000);
+        /* Detect button press: 0 -> 1 */
+        if ((button_now == 1U) && (button_prev == 0U))
+        {
+            led_state ^= 1U;
+
+            if (led_state == 1U)
+            {
+                /* LEDs ON: active-low */
+                GPIOA->BRR = (1U << 9) | (1U << 10);
+            }
+            else
+            {
+                /* LEDs OFF */
+                GPIOA->BSRR = (1U << 9) | (1U << 10);
+            }
+        }
+
+        button_prev = button_now;
     }
-
-
 }
 

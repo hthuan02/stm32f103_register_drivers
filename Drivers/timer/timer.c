@@ -28,7 +28,7 @@ void timer_init(void)
      *                  1000tick = 1ms
      * - Lay 1ms, de delay_ms(1000) chinh xac
      */
-    TIM2->PSC = 8U;
+    TIM2->PSC = 7U;
     TIM2->ARR = 999U;
 
     TIM2->EGR = TIM2_EGR_UG;
@@ -37,14 +37,29 @@ void timer_init(void)
 
 void delay_ms(uint32_t ms)
 {
-    while (ms > 0U)
+    while (ms > 0)
     {
-        TIM2->CNT = 0U;
+        /* Reset counter register */
+        TIM2->CNT = 0;
 
-        /* Clear UIF before waiting */
-        TIM2->SR = ~TIM2_SR_UIF;
+        /* Reset UIF flags skip read-modify, only write */
+        TIM2->SR = ~TIM2_SR_UIF; // 
 
-        while ((TIM2->SR & TIM2_SR_UIF) == 0U);
-        ms--;
+        /* Wait until the UIF flags = 1 */
+        /** 
+         *  bitmask (TIM2_SR_UIF):     0x00000001
+         *  reset UIF flags:           0x11111110
+         ~ 
+         */
+
+        while ((TIM2->SR & TIM2_SR_UIF) == 0U)
+        {
+			/*
+			 *  - When the timer counts 1ms, decrement ms (ms--)
+			 *  Ex: delay_ms(1000) -> 999 -> ... -> 0
+			 */
+        }
+         ms--;    
     }
+    
 }
