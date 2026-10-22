@@ -21,8 +21,25 @@ void gpio_init()
                    GPIOA_CRH_MODE10_OUTPUT_2MHZ |
                    GPIOA_CRH_CNF10_OUTPUT_PP);
     
-   /* Select pull-down */
+   
     GPIOA->CRL |= GPIOA_CRL_CNF0_INPUT_PULL;
-    GPIOA->ODR &= ~(1U << 0);
+    
+    /**
+     *  Select pull-down
+     *  When we use buttton at pull down state
+     *  Diagram: PA0 - Button - 3.3V
+     *
+     *  Pull down with (PUSH) button=1
+     */
+//    GPIOA->ODR &= ~(1U << 0);
 
-}
+
+    /** ---------------- Popular ----------------
+     *  Select pull-up
+     *  When we use buttton at pull up state
+     *  Diagram: PA0 - Button - GND
+     *
+     *  Pull up with (PUSH) button=0
+     */
+     GPIOA->ODR |= (1U << 0);
+}   

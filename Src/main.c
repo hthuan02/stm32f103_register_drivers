@@ -17,58 +17,66 @@
  */
 
 
-#include "../Drivers/rcc/rcc.h"
-#include "../Drivers/gpio/gpio.h"
-#include "../Drivers/timer/timer.h"
+#include "../Drivers/mcu/rcc/rcc.h"
+#include "../Drivers/mcu/gpio/gpio.h"
+#include "../Drivers/mcu/timer/timer.h"
 
-/*-------------------- Hold Button ---------------------------- */
-// while (1)
-// {
-//     if ((GPIOA->IDR & (1U << 0)) != 0U)
-//     {
-//         /* Button pressed: turn both LEDs ON */
-//         GPIOA->BRR = (1U << 9) | (1U << 10);
-//     }
-//     else
-//     {
-//         /* Button released: turn both LEDs OFF */
-//         GPIOA->BSRR = (1U << 9) | (1U << 10);
-//     }
-// }   
-
-/* -------------------- Toggle Button ------------------------- */
-int main(void)
+int main (void)
 {
     rcc_init();
     gpio_init();
     timer_init();
 
-    uint8_t led_state = 0U;
-    uint8_t button_prev = 0U;
-    uint8_t button_now = 0U;
+    /* Reset led before excute program */
+    GPIOA->BSRR = (3UL << 9);
+
+    /* Toggle Button */
+    uint32_t led_state = 0U;
+    uint32_t button_now = 0U;
+    uint32_t button_prev = 0U;
 
     while (1)
     {
-        button_now = (GPIOA->IDR & (1U << 0)) != 0U;
+        button_now = (GPIOA->IDR & (1UL << 0U)) == 0U;
 
-        /* Detect button press: 0 -> 1 */
-        if ((button_now == 1U) && (button_prev == 0U))
+        /* Phát hiện đổi trạng thái: 0->1 (nhấn) */
+        if (button_now == 1U && button_prev == 0U)
         {
-            led_state ^= 1U;
+        	delay_ms(20);
 
-            if (led_state == 1U)
+            /* Xác nhận nút nhấn vẫn được nhấn */
+            if ((GPIOA->IDR & (1UL << 0U)) == 0U)
             {
-                /* LEDs ON: active-low */
-                GPIOA->BRR = (1U << 9) | (1U << 10);
+                led_state ^= 1U;
+
+                // Button=0, set - led on(pull up)
+                if (led_state == 1U)
+                {
+                    GPIOA->BSRR = (3UL << 9U);
+                }
+
+                // Button=1, set - led off(led down)
+                else
+                {
+                    GPIOA->BRR = (3UL << 9U);
+                }
+
+                /** while - button deboucing (chống dội nút nhấn)
+                 *
+                 *  1. Đặt delay sau nhấn nút.
+                 *  2. while chờ giữ trạng thái/phím
+                 *  -> Khi nào nhả, thoát while
+                 */
+                while ((GPIOA->IDR & (1UL << 0U)) == 0U)
+                {
+
+                }
+                delay_ms(20);
             }
-            else
-            {
-                /* LEDs OFF */
-                GPIOA->BSRR = (1U << 9) | (1U << 10);
-            }
+
         }
-
+        /* Cập nhật trạng thái nút nhấn trước	 */
         button_prev = button_now;
     }
-}
 
+}
