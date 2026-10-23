@@ -40,12 +40,14 @@ typedef struct
 #define GPIOA_CRH_PA10_MASK     (0x0FUL << 8U)
 #define GPIOA_CRH_PA9_MASK      (0x0FUL << 4U)
 #define GPIOA_CRL_PA0_MASK      (0x0FUL << 0U)
+#define GPIOA_CRL_PA1_MASK      (0x0FUL << 1U)
 
 #define GPIOA_CRH_MODE9_OUTPUT_2MHZ        (2UL << 4U)
 #define GPIOA_CRH_CNF9_OUTPUT_PP            0UL
 #define GPIOA_CRH_MODE10_OUTPUT_2MHZ       (2UL << 8U)
 #define GPIOA_CRH_CNF10_OUTPUT_PP           0UL
 #define GPIOA_CRL_CNF0_INPUT_PULL          (2UL << 2U)
+#define GPIOA_CRL_CNF1_INPUT_PULL          (2UL << 6U)
 
 
 /**

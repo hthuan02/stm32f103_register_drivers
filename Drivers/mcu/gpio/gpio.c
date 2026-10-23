@@ -22,7 +22,8 @@ void gpio_init()
                    GPIOA_CRH_CNF10_OUTPUT_PP);
     
    
-    GPIOA->CRL |= GPIOA_CRL_CNF0_INPUT_PULL;
+    GPIOA->CRL |= GPIOA_CRL_CNF0_INPUT_PULL |
+                  GPIOA_CRL_CNF1_INPUT_PULL;
     
     /**
      *  Select pull-down
@@ -41,5 +42,7 @@ void gpio_init()
      *
      *  Pull up with (PUSH) button=0
      */
-     GPIOA->ODR |= (1U << 0);
+     GPIOA->ODR |= (1UL << 0U |
+                    1UL << 1U);
+
 }   
