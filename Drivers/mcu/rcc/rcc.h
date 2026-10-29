@@ -12,8 +12,10 @@
 
 #define __vo volatile
 
+
+/* ================================ RCC Register Definitions ==================================*/
 /**
- * RCC register structure
+ *  @brief RCC Structiure offset 
  */
 typedef struct
 {
@@ -30,30 +32,24 @@ typedef struct
 } RCC_Typedef;
 
 /**
- * RCC memory mapping
+ *  @brief memory mapping
  */
 #define RCC_BASE                0x40021000UL
 #define RCC                    ((RCC_Typedef *)RCC_BASE)
 
 /**
- * RCC_CR bits
- * - Bit chọn bật/tắt nguồn HSI, HSE, PLLCLK
+ *  @brief RCC_CR bits
+ *         - Bit chọn bật/tắt nguồn HSI, HSE, PLLCLK
  */
 #define RCC_CR_HSION            (1UL << 0U)         /* Bật nguồn clock HSI */
 #define RCC_CR_HSEON            (1UL << 16U)        /* Bật nguồn clock HSE */
 #define RCC_CR_PLLON            (1UL << 24U)        /* Bật nguồn clock PLLCLK (không phải clock độc lập) */
 
 /**
- * RCC_CFGR bits
- * - Bit Chọn nguồn cho SYSCLK: SW (Software request), SWS (Hardware confirm).
- * - Bộ chia clock: HPRE (AHB), HPRE1 (APB1), HPRE2 (APB2).
- * - Bộ nhân clock: PLLMUL.
- * 
- * - PLLSRC: Nguồn clock đầu vào cho PLL -> HSI. Chọn ==0 để /2 HSI (đúng)
- * - PLLTPXRE: Nguồn clock đàu vào PLL -> HSE. Không cần cấu hình
+ * @brief RCC_CFGR bits
  */
 
-/* SW (read-write) */
+/* SW (read-write) */   
 #define RCC_CFGR_SW_MASK        (3UL << 0U)
 #define RCC_CFGR_SW_HSI         (0UL << 0U)
 #define RCC_CFGR_SW_HSE         (1UL << 0U)
@@ -67,8 +63,8 @@ typedef struct
 
 /* AHB (rw) */
 #define RCC_CFGR_HPRE_MASK      (15UL << 4U)                                  /* 1111: chia 512 */
-#define RCC_CFGR_HPRV_DIV1      (0UL << 4U)                                   /* 0000: chia 1 */
-// Có thể tối giản, &= ~1111 (không cần tạo macro ...DIV1)
+#define RCC_CFGR_HPRE_DIV1      (0UL << 4U)                                   /* 0000: chia 1 */
+
 
 /* APB1 (rw) */
 #define RCC_CFGR_PPRE1_MASK     (7UL << 8U)                                   /* 111: chia 16 */
@@ -86,31 +82,24 @@ typedef struct
 #define RCC_CFGR_PLLMUL_X9      (7UL << 18U)                                  /* 1001: nhân 9, tối đa 72Mhz */
 
 /**
- *  RCC_APB2 bits
+ *  @brief RCC_APB2 bits
  */
 #define RCC_APB2ENR_IOPAEN              (1UL << 2U)
 #define RCC_APB2ENR_IOPBEN              (1UL << 3U)
 #define RCC_APB2ENR_IOPCEN              (1UL << 4U)
 
 /**
- *  RCC_APB1 bits
+ *  @brief RCC_APB1 bits
  */
 #define RCC_APB1ENR_TIM2EN              (1UL << 0U)
 
-/*
- * Function prototype
+/**
+ *  @brief Function prototype
+ * 
+ *  @param void
+ *  @return void
  */
 void rcc_init(void);
 
 #endif /* RCC_H */
 
-
-
-/**
- * FLASH Access Control Register
- */
-#define FLASH_ACR               (*(volatile uint32_t *)0x40022000UL)
-
-/* FLASH_ACR bits */
-#define FLASH_ACR_LATENCY_2WS   (2UL << 0U)
-#define FLASH_ACR_PRFTBE        (1UL << 4U)
