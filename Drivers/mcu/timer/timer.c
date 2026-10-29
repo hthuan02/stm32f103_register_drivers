@@ -31,6 +31,12 @@ void timer_init(void)
     TIM2->PSC = 7U;
     TIM2->ARR = 999U;
 
+    /**
+     *  UG (Update Generation)
+     * - Dùng software set bit UG = 1 -> Ép timer cập nhật sự kiện (UEV)
+     * - Reload lại thanh ghi CNT, PSC, ARR.
+     * - Hardware tự động xóa bit UG sau khi xử lý.
+     */
     TIM2->EGR = TIM2_EGR_UG;
     TIM2->CR1 |= TIM2_CR1_CEN;
 }
