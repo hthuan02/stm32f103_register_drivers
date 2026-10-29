@@ -8,7 +8,7 @@ Project này viết driver cho các ngoại vi trên STM32F103C8T6 như: RCC, GP
 ---
 
 <details>
-  <summary><h3>Driver1: RCC</h3></summary>
+  <summary><h2>Driver1: RCC</h2></summary>
 
 ## 1. Memory mapping register
 
@@ -23,7 +23,7 @@ Project này viết driver cho các ngoại vi trên STM32F103C8T6 như: RCC, GP
 
 
 <details>
-  <summary><h3>Driver2: GPIO</h3></summary>
+  <summary><h2>Driver2: GPIO</h2></summary>
     
 </details>
 
@@ -32,7 +32,7 @@ Project này viết driver cho các ngoại vi trên STM32F103C8T6 như: RCC, GP
 
 
 <details>
-  <summary><h3>Driver3: TIMER</h3></summary>
+  <summary><h2>Driver3: TIMER</h2></summary>
     
 </details>
 
