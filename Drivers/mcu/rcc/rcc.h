@@ -36,14 +36,6 @@ typedef struct
 #define RCC                    ((RCC_Typedef *)RCC_BASE)
 
 /*
- * Peripheral clock enable
- */
-#define RCC_IOPAEN              (1UL << 2U)
-#define RCC_IOPBEN              (1UL << 3U)
-#define RCC_IOPCEN              (1UL << 4U)
-#define RCC_TIM2EN              (1UL << 0U)
-
-/*
  * FLASH Access Control Register
  */
 #define FLASH_ACR               (*(volatile uint32_t *)0x40022000UL)
@@ -55,12 +47,9 @@ typedef struct
 /*
  * RCC_CR bits
  */
-#define RCC_CR_HSION            (1UL << 0U)
-#define RCC_CR_HSIRDY           (1UL << 1U)
-#define RCC_CR_HSEON            (1UL << 16U)
-#define RCC_CR_HSERDY           (1UL << 17U)
-#define RCC_CR_PLLON            (1UL << 24U)
-#define RCC_CR_PLLRDY           (1UL << 25U)
+#define RCC_CR_HSION            (1UL << 0U)         /* Bật nguồn clock HSI */
+#define RCC_CR_HSEON            (1UL << 16U)        /* Bật nguồn clock HSE */
+#define RCC_CR_PLLON            (1UL << 24U)        /* Bật nguồn clock PLLCLK (không phải clock độc lập) */
 
 /*
  * RCC_CFGR bits
@@ -80,6 +69,14 @@ typedef struct
 #define RCC_CFGR_PLLSRC         (1UL << 16U)
 #define RCC_CFGR_PLLMUL_MASK    (15UL << 18U)
 #define RCC_CFGR_PLLMUL_X9      (7UL << 18U)
+
+/*
+ * Peripheral clock enable
+ */
+#define RCC_IOPAEN              (1UL << 2U)
+#define RCC_IOPBEN              (1UL << 3U)
+#define RCC_IOPCEN              (1UL << 4U)
+#define RCC_TIM2EN              (1UL << 0U)
 
 /*
  * Function prototype
