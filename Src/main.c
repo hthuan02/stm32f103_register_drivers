@@ -31,51 +31,36 @@ int main (void)
 	GPIOA->BSRR = (3UL << 9U);
 
 	uint32_t led_state = 0U;
-	uint32_t button_now = 0U;
-	uint32_t button_prev = 0U;
 
 	while (1)
 	{
-		button_now = (GPIOA->IDR & (1UL << 0U)) == 0U;
-
-		/* Phát hiện đổi trạng thái: 0->1 (nhấn) */
-		if (button_now == 1U && button_prev == 0U)
-		{
+		if ((GPIOA->IDR & (1UL << 0U)) == 0)
+		{	
 			delay_ms(20);
 
-			/* Xác nhận nút nhấn vẫn được nhấn */
-			if ((GPIOA->IDR & (1UL << 0U)) == 0U)
+			if ((GPIOA->IDR & (1UL << 0U)) == 0)
 			{
-				led_state ^= 1U;
-
-				// Button=0, set - led on(pull up)
-				if (led_state == 1U)
-				{
+				led_state ^= 1;
+				if (led_state == 1)
+				{	
+					/* Led on - I/O = 00 */
 					GPIOA->BRR = (3UL << 9U);
 				}
 
-				// Button=1, set - led off(led down)
 				else
 				{
-					GPIOA->BSRR = (3UL << 9U);
+					/* Led off - I/O == 11 */
+					GPIOA->BSRR = (3UL << 9);
 				}
 
-				/** while - button deboucing (chống dội nút nhấn)
-				 *
-				 *  1. Đặt delay sau nhấn nút.
-				 *  2. while chờ giữ trạng thái/phím
-				 *  -> Khi nào nhả, thoát while
-				 */
-				while ((GPIOA->IDR & (1UL << 0U)) == 0U)
+				/* Button debouncing */
+				while ((GPIOA->IDR & (1UL << 0U)) == 0)
 				{
-
 				}
 				delay_ms(20);
 			}
-
+			
 		}
-		/* Cập nhật trạng thái nút nhấn trước	 */
-		button_prev = button_now;
+		
 	}
-
 }

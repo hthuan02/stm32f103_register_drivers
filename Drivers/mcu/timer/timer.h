@@ -12,8 +12,9 @@
 #include <stdint.h>
 #define __vo volatile
 
+/* ================================ TIMER Register Definitions ================================*/
 /**
- *  Offset of TIM register
+ *  @brief Structure of TIM register offset
  */
 typedef struct
 {
@@ -37,13 +38,13 @@ typedef struct
 
 
 /**
- *  Timer2 - Memory mapping register
+ *  @brief TIM2 - Memory mapped register
  */
 #define TIM2_BASE       0x40000000UL
 #define TIM2            ((TIM_Typedef *)TIM2_BASE)
 
 /**
- *  Use bits of timer register
+ *  @brief Use bits of timer register
  */
 #define TIM2_CR1_CEN        (1UL << 0U)
 #define TIM2_CR1_DIR        (1UL << 4U)
@@ -58,4 +59,4 @@ typedef struct
 void timer_init(void);
 void delay_ms(uint32_t ms);
 
-#endif  // TIMER_H
+#endif  /* TIMER_H */ 

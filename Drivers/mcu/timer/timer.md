@@ -2,6 +2,8 @@
 
 ## 1. Prescaler and Auto-Reload Registers
 
+**_Case1 : Clock Source haven't configure yet, is 8Mhz_**
+
 - We have four main clock sources: HSI, HSE, LSI, and LSE.
 - However, the `Blue Pill` board uses HSI, HSE, and PLL (the PLL is not an independent clock source).
 - If we don't configure the RCC, the system will use the HSI clock at 8 MHz by default.
@@ -27,6 +29,28 @@ HSI = 8 MHz
         PSC: 7
         ARR: 999
 ```
+
+**_Case2 : Clock Source is configured is PLLCLK 72Mhz_**
+
+```text
+    PSC = 8
+    72,000,000 / 72 = 1,000,000 Hz
+    T = 1/f = 1/1,000,000 = 0.000001 s = 0.001 ms
+
+    ARR = 1000
+    1 T  -> 1 tick = 0.001 ms
+            10 ticks = 0.01 ms
+            100 ticks = 0.1 ms
+            1000 ticks = 1 ms
+    Take a period (T) of 1 ms, exactly for delay_ms(1000).
+
+    Because the timer counts from 0 to the ARR register value, we must subtract one.
+    So:
+        PSC: 71
+        ARR: 999
+```
+
+
 ## 2. Force UG bit of EGR register
 
 ```text

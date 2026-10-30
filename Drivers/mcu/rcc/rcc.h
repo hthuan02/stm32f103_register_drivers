@@ -12,74 +12,99 @@
 
 #define __vo volatile
 
+/* ================================ FLASH Access Control Registers ============================*/
+
+/**
+ *  @brief Memory mapped FLASH_ACR register
+ */
+#define FLASH_BASE              0x40022000UL
+#define FLASH_ACR               (*(volatile uint32_t *) FLASH_BASE)
+
+/**
+ *  @brief FLASH_ACR bits (rw)
+ */
+#define FLASH_ACR_LATENCY_MASK  (3UL << 0U)
+#define FLASH_ACR_LATENCY_2WS   (2UL << 0U)
+#define FLASH_ACR_PRFTBE        (1UL << 4U)
+
 
 /* ================================ RCC Register Definitions ==================================*/
 /**
- *  @brief RCC Structiure offset 
+ *  @brief RCC Structure offset 
  */
 typedef struct
 {
-    __vo uint32_t CR;           // Offset: 0x00
-    __vo uint32_t CFGR;         // Offset: 0x04
-    __vo uint32_t CIR;          // Offset: 0x08
-    __vo uint32_t APB2RSTR;     // Offset: 0x0C
-    __vo uint32_t APB1RSTR;     // Offset: 0x10
-    __vo uint32_t AHBENR;       // Offset: 0x14
-    __vo uint32_t APB2ENR;      // Offset: 0x18
-    __vo uint32_t APB1ENR;      // Offset: 0x1C
-    __vo uint32_t BDCR;         // Offset: 0x20
-    __vo uint32_t CSR;          // Offset: 0x24
+    __vo uint32_t CR;                               /* Offset: 0x00 */ 
+    __vo uint32_t CFGR;                             /* Offset: 0x04 */
+    __vo uint32_t CIR;                              /* Offset: 0x08 */
+    __vo uint32_t APB2RSTR;                         /* Offset: 0x0C */
+    __vo uint32_t APB1RSTR;                         /* Offset: 0x10 */
+    __vo uint32_t AHBENR;                           /* Offset: 0x14 */
+    __vo uint32_t APB2ENR;                          /* Offset: 0x18 */
+    __vo uint32_t APB1ENR;                          /* Offset: 0x1C */
+    __vo uint32_t BDCR;                             /* Offset: 0x20 */
+    __vo uint32_t CSR;                              /* Offset: 0x24 */
 } RCC_Typedef;
 
 /**
- *  @brief memory mapping
+ *  @brief Memory mapping
  */
 #define RCC_BASE                0x40021000UL
-#define RCC                    ((RCC_Typedef *)RCC_BASE)
+#define RCC                     ((RCC_Typedef *)RCC_BASE)
 
 /**
  *  @brief RCC_CR bits
- *         - Bit chọn bật/tắt nguồn HSI, HSE, PLLCLK
  */
-#define RCC_CR_HSION            (1UL << 0U)         /* Bật nguồn clock HSI */
-#define RCC_CR_HSEON            (1UL << 16U)        /* Bật nguồn clock HSE */
-#define RCC_CR_PLLON            (1UL << 24U)        /* Bật nguồn clock PLLCLK (không phải clock độc lập) */
+#define RCC_CR_HSION            (1UL << 0U)         /* Turn on the HSI clock source (rw)  */
+#define RCC_CR_HSIRDY           (1UL << 1U)         /* Check bit the HSI clock source is ready (r) */
+
+#define RCC_CR_HSEON            (1UL << 16U)        /* (rw) */
+#define RCC_CR_HSERDY           (1UL << 17U)        /* (r) */
+
+#define RCC_CR_PLLON            (1UL << 24U)        /* (rw) */
+#define RCC_CR_PLLRDY           (1UL << 25U)        /* (r) */
 
 /**
- * @brief RCC_CFGR bits
+ * @brief RCC_CFGR bits (rw)
+ *        Select clock source for SYSCLK (HSI, HSE or PLL)
+ * 
  */
-
-/* SW (read-write) */   
+/* SW */   
 #define RCC_CFGR_SW_MASK        (3UL << 0U)
 #define RCC_CFGR_SW_HSI         (0UL << 0U)
 #define RCC_CFGR_SW_HSE         (1UL << 0U)
 #define RCC_CFGR_SW_PLL         (2UL << 0U)
 
-/* SWS (read-only) */
+/* SWS */
 #define RCC_CFGR_SWS_MASK       (3UL << 2U)
 #define RCC_CFGR_SWS_HSI        (0UL << 2U)
 #define RCC_CFGR_SWS_HSE        (1UL << 2U)
 #define RCC_CFGR_SWS_PLL        (2UL << 2U)
 
-/* AHB (rw) */
-#define RCC_CFGR_HPRE_MASK      (15UL << 4U)                                  /* 1111: chia 512 */
-#define RCC_CFGR_HPRE_DIV1      (0UL << 4U)                                   /* 0000: chia 1 */
+/* AHB */
+#define RCC_CFGR_HPRE_MASK      (15UL << 4U)        /* 1111: divide 512 */
+#define RCC_CFGR_HPRE_DIV1      (0UL << 4U)         /* 0000: divide 1 */
 
 
-/* APB1 (rw) */
-#define RCC_CFGR_PPRE1_MASK     (7UL << 8U)                                   /* 111: chia 16 */
-#define RCC_CFGR_PPRE1_DIV2     (4UL << 8U)                                   /* 100: chia 2, APB1 tối đa 36Mhz */
+/* APB1 */
+#define RCC_CFGR_PPRE1_MASK     (7UL << 8U)         /* 111: divide 16 */
+#define RCC_CFGR_PPRE1_DIV2     (4UL << 8U)         /* 100: divide 2, the APB1 have max frequency 36Mhz */
 
-/* APB2 (rw) */
-#define RCC_CFGR_PPRE2_MASK     (7UL << 11U)                                  /* 111: chia 16, lấy `&= ~` là chia 1 */
-#define RcC_CFGR_PPRE2_DIV1     (0UL << 11U)
+/* APB2 */
+#define RCC_CFGR_PPRE2_MASK     (7UL << 11U)        /* 111: divide 16 , take `&= ~` is divide 1 */
+#define RCC_CFGR_PPRE2_DIV1     (0UL << 11U)
 
-/* PLLSRC (rw) */
-#define RCC_CFGR_PLLSRC         (1UL << 16U)
+/* PLLSRC */
+#define RCC_CFGR_PLLSRC_HSI     (0UL << 16U)
+#define RCC_CFGR_PLLSRC_HSE     (1UL << 16U)
 
-/* PLLMUL (rw) */
+/* PLLXTPRE */
+#define RCC_CFGR_PLLXTPRE_HSE_NO_DIV       (0UL << 17U)
+#define RCC_CFGR_PLLXTPRE_HSE_DIV2         (1UL << 17U) 
+
+/* PLLMUL */
 #define RCC_CFGR_PLLMUL_MASK    (15UL << 18U)
-#define RCC_CFGR_PLLMUL_X9      (7UL << 18U)                                  /* 1001: nhân 9, tối đa 72Mhz */
+#define RCC_CFGR_PLLMUL_X9      (7UL << 18U)       /* 1001: multi 9, max frequency 72Mhz */
 
 /**
  *  @brief RCC_APB2 bits
@@ -95,7 +120,6 @@ typedef struct
 
 /**
  *  @brief Function prototype
- * 
  *  @param void
  *  @return void
  */

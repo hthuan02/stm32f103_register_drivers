@@ -12,13 +12,14 @@
 
 #define __vo volatile
 
+/* ================================ GPIO Register Definitions =================================*/
 /**
  *  Offset of GPIO register
  */
 typedef struct
 {
-    __vo uint32_t CRL;
-    __vo uint32_t CRH;
+    __vo uint32_t CRL;                  /* Offset: 0x00 */
+    __vo uint32_t CRH;                  /* ... */
     __vo uint32_t IDR;
     __vo uint32_t ODR;
     __vo uint32_t BSRR;
