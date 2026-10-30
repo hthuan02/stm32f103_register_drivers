@@ -54,21 +54,16 @@ Mỗi driver được trình bày theo ba phần chính:
 
 
 
-
-
 <details>
   <summary><h2>Driver2: GPIO</h2></summary>
     
-</details>
-
 ## 1. Memory mapping register
 
 
 ## 2. Register Configuration
 
 ## 3. Use peripheral
-
-
+</details>
 
 
 <details>
