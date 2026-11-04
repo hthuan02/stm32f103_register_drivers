@@ -19,12 +19,12 @@ void rcc_init(void)
     FLASH_ACR |= FLASH_ACR_LATENCY_2WS;
     // FLASH_ACR = (FLASH_ACR & ~FLASH_ACR_LATENCY_MASK) | FLASH_ACR_LATENCY_2WS;	
 
-    /* 1. Select HSE clock resource */
+    /* 1. Select HSE enable clock resource */
     RCC->CR |= RCC_CR_HSEON;
 
-    while ((RCC->CR & RCC_CR_HSERDY) == 0U)
-    {
-    }
+        while ((RCC->CR & RCC_CR_HSERDY) == 0U)
+        {
+        }
 
     /* Configure divider: AHB = /1, APB1 = /2, APB2 = /1 */
     RCC->CFGR &= ~(RCC_CFGR_HPRE_MASK |

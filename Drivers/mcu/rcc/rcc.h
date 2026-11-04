@@ -23,7 +23,7 @@
 /**
  *  @brief FLASH_ACR bits (rw)
  */
-#define FLASH_ACR_LATENCY_MASK  (3UL << 0U)
+#define FLASH_ACR_LATENCY_MASK  (7UL << 0U)
 #define FLASH_ACR_LATENCY_2WS   (2UL << 0U)
 #define FLASH_ACR_PRFTBE        (1UL << 4U)
 
@@ -117,6 +117,7 @@ typedef struct
  *  @brief RCC_APB1 bits
  */
 #define RCC_APB1ENR_TIM2EN              (1UL << 0U)
+#define RCC_APB1ENR_USART2EN            (1UL << 17U)
 
 /**
  *  @brief Function prototype

@@ -46,17 +46,17 @@ typedef struct
 /**
  *  @brief Use bits of timer register
  */
-#define TIM2_CR1_CEN        (1UL << 0U)
-#define TIM2_CR1_DIR        (1UL << 4U)
+#define TIM_CR1_CEN             (1UL << 0U)
+#define TIM_CR1_DIR             (1UL << 4U)
 
-#define TIM2_SR_UIF         (1UL << 0U)
-#define TIM2_EGR_UG         (1UL << 0U)
+#define TIM_SR_UIF              (1UL << 0U)
+#define TIM_EGR_UG              (1UL << 0U)
 
-#define TIM2_CNT_MASK            0xFFFFUL
-#define TIM2_PSC_MASK            0xFFFFUL
-#define TIM2_ARR_MASK            0xFFFFUL
+#define TIM_CNT_MASK            (0xFFFFUL)
+#define TIM_PSC_MASK            (0xFFFFUL)
+#define TIM_ARR_MASK            (0xFFFFUL)
 
-void timer_init(void);
+void timer2_init(void);
 void delay_ms(uint32_t ms);
 
 #endif  /* TIMER_H */ 

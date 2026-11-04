@@ -20,47 +20,37 @@
 #include "../Drivers/mcu/rcc/rcc.h"
 #include "../Drivers/mcu/gpio/gpio.h"
 #include "../Drivers/mcu/timer/timer.h"
+#include "../Drivers/mcu/usart/usart.h"
 
 int main (void)
 {
-	rcc_init();
-	gpio_init();
-	timer_init();
+	uint32_t data_rx = 0;
 
-	/* Toggle Button */
+	rcc_init();
+
+	gpio_init();
+	/* Reset led */
 	GPIOA->BSRR = (3UL << 9U);
 
-	uint32_t led_state = 0U;
+
+	timer2_init();
+	usart2_init();
+	usart2_frame_config();
 
 	while (1)
-	{
-		if ((GPIOA->IDR & (1UL << 0U)) == 0)
-		{	
-			delay_ms(20);
+	{	
+		data_rx = usart2_receive_rx();
 
-			if ((GPIOA->IDR & (1UL << 0U)) == 0)
-			{
-				led_state ^= 1;
-				if (led_state == 1)
-				{	
-					/* Led on - I/O = 00 */
-					GPIOA->BRR = (3UL << 9U);
-				}
+		if (data_rx == 'S')
+		{
+			GPIOA->BRR = (3UL << 9U);
+		}
 
-				else
-				{
-					/* Led off - I/O == 11 */
-					GPIOA->BSRR = (3UL << 9);
-				}
-
-				/* Button debouncing */
-				while ((GPIOA->IDR & (1UL << 0U)) == 0)
-				{
-				}
-				delay_ms(20);
-			}
-			
+		else if (data_rx == 'T')
+		{
+			GPIOA->BSRR = (3UL << 9U);
 		}
 		
+	
 	}
 }
