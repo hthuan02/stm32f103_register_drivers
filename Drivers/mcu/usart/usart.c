@@ -97,7 +97,7 @@ void usart2_frame_config (void)
  * 
  *  @param data
  */
-void usart2_transmit_tx(uint32_t data)
+void usart2_transmit_char(uint32_t data)
 {
     while ((USART2->SR & USART_SR_TXE) == 0)
     {
@@ -107,10 +107,10 @@ void usart2_transmit_tx(uint32_t data)
 }
 /**
  *  @brief Receiver USART function
- * 
+ *          
  *  @param data
  */
-uint32_t usart2_receive_rx(void)
+uint32_t usart2_receive_char(void)
 {
     while ((USART2->SR & USART_SR_RXNE) == 0)
     {
@@ -119,4 +119,21 @@ uint32_t usart2_receive_rx(void)
     uint32_t data = (uint32_t) USART2->DR;
 
     return data;
+}
+
+void usart2_transmit_string(const char *str)
+{   
+    /* Kiểm tra con trỏ */
+    if (str == NULL)
+    {
+        return;
+    }
+    
+    /* Kiểm tra kí tự kết thúc */
+    while (*str != '\0')
+    {
+        usart2_transmit_char((uint32_t) *str);
+        str++;                                                      /* Hậu tố, tăng kí tự tiếp theo */ 
+    }
+    
 }
