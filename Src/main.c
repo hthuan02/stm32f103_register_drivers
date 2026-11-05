@@ -23,7 +23,7 @@ int main (void)
 {
 	uint32_t data_rx = 0;
 
-	rcc_init();
+	rcc_pllclk_init();
 
 	gpio_init();
 	/* Reset led */

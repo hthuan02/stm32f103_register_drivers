@@ -6,9 +6,13 @@
  */
 
 #include "timer.h"
+#include "../rcc/rcc.h"
 
 void timer2_init(void)
 {   
+    /* Enable peripheral clock */
+    rcc_timer2_clock_enable();
+
     /* Disable the timer counter */
     TIM2->CR1 &= ~TIM_CR1_CEN;
 

@@ -8,9 +8,9 @@
 #include "rcc.h"
 
 /**
- *  @brief RCC Initialize function
+ *  @brief Initialize PLLCLK peripheral clock
  */
-void rcc_init(void)
+void rcc_pllclk_init(void)
 {
     /* Configure Flash for 72 MHz */
     FLASH_ACR |= FLASH_ACR_PRFTBE;
@@ -22,9 +22,9 @@ void rcc_init(void)
     /* 1. Select HSE enable clock resource */
     RCC->CR |= RCC_CR_HSEON;
 
-        while ((RCC->CR & RCC_CR_HSERDY) == 0U)
-        {
-        }
+	while ((RCC->CR & RCC_CR_HSERDY) == 0U)
+	{
+	}
 
     /* Configure divider: AHB = /1, APB1 = /2, APB2 = /1 */
     RCC->CFGR &= ~(RCC_CFGR_HPRE_MASK |
@@ -55,8 +55,36 @@ void rcc_init(void)
     while ((RCC->CFGR & RCC_CFGR_SWS_MASK) != RCC_CFGR_SWS_PLL)
     {
     }
+}
 
-    /* 7. Enable GPIOA and TIM2 peripheral clocks */
+/**
+ *  @brief Enable GPIOA peripheral clock
+ */
+void rcc_gpioa_clock_enable(void)
+{
     RCC->APB2ENR |= RCC_APB2ENR_IOPAEN;
+}
+
+/**
+ *  @brief Enable GPIOB peripheral clock
+ */
+void rcc_gpiob_clock_enable(void)
+{
+    RCC->APB2ENR |= RCC_APB2ENR_IOPBEN;
+}
+
+/**
+ *  @brief Enable TIMER2 peripheral clock
+ */
+void rcc_timer2_clock_enable(void)
+{
     RCC->APB1ENR |= RCC_APB1ENR_TIM2EN;
+}
+
+/**
+ *  @brief Enable USART2 peripheral clock
+ */
+void rcc_usart2_clock_enable(void)
+{
+    RCC->APB1ENR |= RCC_APB1ENR_USART2EN;
 }

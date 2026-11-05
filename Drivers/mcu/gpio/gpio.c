@@ -7,9 +7,13 @@
 
 
 #include "gpio.h"
+#include "../rcc/rcc.h"
 
 void gpio_init()
 {
+	/* Enable GPIOA peripheral clock */
+    rcc_gpioa_clock_enable();
+
     GPIOA->CRH &= ~ (GPIOA_CRH_PA9_MASK |
                      GPIOA_CRH_PA10_MASK);
     

@@ -12,9 +12,13 @@
 #include "../../../Inc/stm32_rcc.h"
 
 /**
- *  @brief Function prototype
+ *  @brief RCC enable clock prototype function
  */
-void rcc_init(void);
+void rcc_pllclk_init(void);
+void rcc_gpioa_clock_enable(void);
+void rcc_gpiob_clock_enable(void);
+void rcc_timer2_clock_enable(void);
+void rcc_usart2_clock_enable(void);
 
 #endif /* RCC_H */
 

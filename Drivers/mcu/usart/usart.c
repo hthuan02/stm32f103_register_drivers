@@ -18,7 +18,10 @@
 void usart2_init (void)
 {
     /* Enable clock for USART2 */
-    RCC->APB1ENR |= RCC_APB1ENR_USART2EN;
+    rcc_usart2_clock_enable();
+
+    /* Enable clock for GPIOA */
+	rcc_gpioa_clock_enable();
 
     /* Reset PA2 PA3*/
     GPIOA->CRL &= ~(GPIOA_CRL_PA2_MASK | GPIOA_CRL_PA3_MASK);
