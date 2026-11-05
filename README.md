@@ -1,5 +1,10 @@
 # STMF103C8T6 Register Drivers
-_(Hiện tại dự án này chưa hoàn thiện driver I2C, SPI, ADC, DMA và Interrupt)_
+
+```text
+Hiện tại dự án này chưa hoàn thiện driver I2C, SPI, ADC, DMA và Interrupt. Hướng phát triển tiếp theo như sau:_
+- Viết đầy đủ driver cho các ngoại vi.
+- Viêt API tổng quát để tái sử dụng cho các driver ngoại vi.
+```
 
 https://docs.google.com/document/d/16FRHLIoe78qfctlE34TOy7OcR2Rvi9QGmCKG_Lbty2o/edit?tab=t.ie2sbbpyxhg0
 
