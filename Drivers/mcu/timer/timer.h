@@ -10,51 +10,7 @@
 #define TIMER_H
 
 #include <stdint.h>
-#define __vo volatile
-
-/* ================================ TIMER Register Definitions ================================*/
-/**
- *  @brief Structure of TIM register offset
- */
-typedef struct
-{
-    __vo uint32_t CR1;          // Offset: 0x00
-    __vo uint32_t CR2;          // 0x04
-    __vo uint32_t SMCR;         // 0x08
-    __vo uint32_t DIER;         // 0x0C
-    __vo uint32_t SR;           // 0x10
-    __vo uint32_t EGR;          // 0x14
-    __vo uint32_t CCMR1;        // 0x18
-    __vo uint32_t CCMR2;        // 0x1C
-    __vo uint32_t CCER;         // 0x20
-    __vo uint32_t CNT;          // 0x24
-    __vo uint32_t PSC;          // 0x28
-    __vo uint32_t ARR;          // 0x2C
-    /**
-     * Register remain unused
-     */
-
-}TIM_Typedef;
-
-
-/**
- *  @brief TIM2 - Memory mapped register
- */
-#define TIM2_BASE       0x40000000UL
-#define TIM2            ((TIM_Typedef *)TIM2_BASE)
-
-/**
- *  @brief Use bits of timer register
- */
-#define TIM_CR1_CEN             (1UL << 0U)
-#define TIM_CR1_DIR             (1UL << 4U)
-
-#define TIM_SR_UIF              (1UL << 0U)
-#define TIM_EGR_UG              (1UL << 0U)
-
-#define TIM_CNT_MASK            (0xFFFFUL)
-#define TIM_PSC_MASK            (0xFFFFUL)
-#define TIM_ARR_MASK            (0xFFFFUL)
+#include "../../../Inc/stm32_timer.h"
 
 void timer2_init(void);
 void delay_ms(uint32_t ms);

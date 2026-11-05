@@ -17,10 +17,7 @@
 	*/
 
 
-#include "../Drivers/mcu/rcc/rcc.h"
-#include "../Drivers/mcu/gpio/gpio.h"
-#include "../Drivers/mcu/timer/timer.h"
-#include "../Drivers/mcu/usart/usart.h"
+#include "../Inc/main.h"
 
 int main (void)
 {
@@ -55,12 +52,12 @@ int main (void)
 		switch (data_rx)
 		{
 		case 'S':
-			GPIOA->BRR = (3UL << 5U);
+			GPIOA->BRR = (3UL << 9U);
 			usart2_transmit_string("- Turn on the led PA9 & PA10\n");	
 			break;
 		
 		case 'T':
-			GPIOA->BSRR = (3UL << 5U);
+			GPIOA->BSRR = (3UL << 9U);
 			usart2_transmit_string("- Turn off the led PA9 & PA10\n");
 			break;
 

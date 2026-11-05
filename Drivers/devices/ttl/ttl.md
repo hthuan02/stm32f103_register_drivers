@@ -2,7 +2,16 @@
 
 _Use Hercules application to display_
 
-## 1. PC & STM32 (2 direction comunication)
+## 1. PC & STM32 (2 dimension comunication)
+
+**Flow:**
+
+- Hercules transmit char `'S'` or `'T'` for STM32.
+- STM32 **receive char** 
+    + `'S'`: Turn on the led.
+    + `'T'`: Turn off the led.
+    + Other: Try again...
+- After STM32 will **transmit string** on hercules screen.
 
 ```c
 int main (void)
@@ -57,4 +66,4 @@ int main (void)
 }
 ```
 
-## 2. STM32 & STM32 (2 direction comunication)
+## 2. STM32 & STM32 (2 dimension comunication)

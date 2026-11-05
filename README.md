@@ -1,7 +1,9 @@
 # STMF103C8T6 Register Drivers
+_(Hiện tại dự án này chưa hoàn thiện driver I2C, SPI, ADC, DMA và Interrupt)_
 
 https://docs.google.com/document/d/16FRHLIoe78qfctlE34TOy7OcR2Rvi9QGmCKG_Lbty2o/edit?tab=t.ie2sbbpyxhg0
-_(Tài liệu docs được tổng hợp từ RM0008)_
+
+_(Tài liệu google docs được tổng hợp dựa trên RM0008)_
 
 ---
 ## Giới thiệu dự án
@@ -56,13 +58,6 @@ Mỗi driver được trình bày theo ba phần chính:
 
 <details>
   <summary><h2>Driver2: GPIO</h2></summary>
-    
-## 1. Memory mapping register
-
-
-## 2. Register Configuration
-
-## 3. Use peripheral
 </details>
 
 
@@ -72,3 +67,13 @@ Mỗi driver được trình bày theo ba phần chính:
 </details>
 
 
+<details>
+  <summary><h2>Driver3: UART/USART</h2></summary>
+    
+</details>
+
+
+<details>
+  <summary><h2>Driver5: I2C </h2></summary>
+    
+</details>
