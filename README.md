@@ -1,7 +1,7 @@
 # STMF103C8T6 Register Drivers
 
 ```text
-Hiện tại dự án này chưa hoàn thiện driver I2C, SPI, ADC, DMA và Interrupt. Hướng phát triển tiếp theo như sau:_
+Hiện tại dự án này chưa hoàn thiện driver I2C, SPI, ADC, DMA và Interrupt, hướng phát triển tiếp theo là:
 - Viết đầy đủ driver cho các ngoại vi.
 - Viêt API tổng quát để tái sử dụng cho các driver ngoại vi.
 ```
