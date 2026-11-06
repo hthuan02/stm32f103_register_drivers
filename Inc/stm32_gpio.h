@@ -13,7 +13,7 @@
 
 /* ================================ GPIO Register Definitions =================================*/
 /**
- *  Offset of GPIO register
+ *  @brief Offset of GPIO register
  */
 typedef struct
 {
@@ -28,40 +28,62 @@ typedef struct
 }GPIO_Typedef;
 
 /**
- *  Memory mapping GPIO register
+ *  @brief Memory mapped register
  */
-#define GPIOA_BASE                        0x40010800UL
-#define GPIOA                             ((GPIO_Typedef *)GPIOA_BASE)
+#define GPIOA_BASE  0x40010800UL
+#define GPIOB_BASE  0x40010C00UL
+#define GPIOC_BASE  0x40011000UL
+#define GPIOD_BASE  0x40011400UL
+#define GPIOE_BASE  0x40011800UL
+#define GPIOA   ((GPIO_Typedef *)GPIOA_BASE)
+#define GPIOB   ((GPIO_Typedef *)GPIOA_BASE)
+#define GPIOC   ((GPIO_Typedef *)GPIOA_BASE)
+#define GPIOD   ((GPIO_Typedef *)GPIOA_BASE)
+#define GPIOE   ((GPIO_Typedef *)GPIOA_BASE)
 
-/*
- * @brief GPIOA bitmask
+/**
+ *  @brief CRL bits
  */
-/* PA0 */
-#define GPIOA_CRL_PA0_MASK                (0xFUL << 0U)
-#define GPIOA_CRL_CNF0_INPUT_PULL         (2UL << 2U)
+#define GPIO_CRL_PIN_0                (0xFUL << 0U)
+#define GPIO_CRL_PIN_1                (0xFUL << 4U)
+#define GPIO_CRL_PIN_2                (0xFUL << 8U)
+#define GPIO_CRL_PIN_3                (0xFUL << 12U)
+#define GPIO_CRL_PIN_6                (0xFUL << 24U)
+#define GPIO_CRL_PIN_7                (0xFUL << 28U)
 
-/* PA1 */
-#define GPIOA_CRL_PA1_MASK                (0xFUL << 4U)
-#define GPIOA_CRL_CNF1_INPUT_PULL         (2UL << 6U)
+/**
+ *  @brief CRH bits
+ */
+#define GPIO_CRH_PIN9                 (0xFUL << 4U)
+#define GPIO_CRH_PIN10                (0xFUL << 8U)
 
-/* PA2_tx */
-#define GPIOA_CRL_PA2_MASK                (0xFUL << 8U)
-#define GPIOA_CRL_MODE2_OUTPUT_2MHZ       (2UL << 8U)
-#define GPIOA_CRL_CNF2_AF_PP              (2UL << 10U)
+/**
+ *  @brief CRL bitmask
+ */
+/* BUTTON 1 2 */
+#define GPIO_CRL_CNF0_INPUT_PULL         (2UL << 2U)
+#define GPIO_CRL_CNF1_INPUT_PULL         (2UL << 6U)
 
-/* PA3_rx */
-#define GPIOA_CRL_PA3_MASK                (0xFUL << 12U)
-#define GPIOA_CRL_MODE3_INPUT             0UL
-#define GPIOA_CRL_CNF3_INPUT_FLOATING     (1UL << 14U)
+/* USART2 */
+#define GPIO_CRL_MODE2_OUTPUT_2MHZ       (2UL << 8U)
+#define GPIO_CRL_CNF2_AF_PP              (2UL << 10U)
+#define GPIO_CRL_MODE3_INPUT             0UL
+#define GPIO_CRL_CNF3_INPUT_FLOATING     (1UL << 14U)
 
-/* PA9 */
-#define GPIOA_CRH_PA9_MASK                (0xFUL << 4U)
-#define GPIOA_CRH_MODE9_OUTPUT_2MHZ       (2UL << 4U)
-#define GPIOA_CRH_CNF9_OUTPUT_PP          0UL
+/* I2C1*/
+#define GPIO_CRL_PIN_6_50MHZ_AF_OD       (0xFUL << 24U)                 /* MODE_bits: Output 50MHZ (11) */
+#define GPIO_CRL_PIN_7_50MHZ_AF_OD       (0xFUL << 28U)                 /* CNF_bits: AF_OD (11) */
 
-/* PA10 */
-#define GPIOA_CRH_PA10_MASK               (0x0FUL << 8U)  
-#define GPIOA_CRH_MODE10_OUTPUT_2MHZ      (2UL << 8U)
-#define GPIOA_CRH_CNF10_OUTPUT_PP         0UL
+/**
+ *  @brief CRH bitmask
+ */
+/* LED1 */
+#define GPIO_CRH_MODE9_OUTPUT_2MHZ       (2UL << 4U)
+#define GPIO_CRH_CNF9_OUTPUT_PP          0UL
+
+/* LED2 */
+#define GPIO_CRH_MODE10_OUTPUT_2MHZ      (2UL << 8U)
+#define GPIO_CRH_CNF10_OUTPUT_PP         0UL
+
 
 #endif /* STM32_GPIO_H_ */

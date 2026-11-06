@@ -6,8 +6,8 @@
  */
 
 
-#ifndef TIMER_H
-#define TIMER_H
+#ifndef TIMER_H_
+#define TIMER_H_
 
 #include <stdint.h>
 #include "../../../Inc/stm32_timer.h"
@@ -15,4 +15,4 @@
 void timer2_init(void);
 void delay_ms(uint32_t ms);
 
-#endif  /* TIMER_H */ 
+#endif  /* TIMER_H_ */

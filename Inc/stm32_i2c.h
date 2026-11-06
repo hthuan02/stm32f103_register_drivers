@@ -46,8 +46,7 @@ typedef struct
  *  @brief I2C_CR2 bits
  */
 #define I2C_CR2_FREQ_MASK          0x3FUL
-#define I2C_CR2_FREQ_2MHZ          2UL
-#define I2C_CR2_FREQ_50MHZ         0x32UL                                    /* Uncomfortable, The APB1 bus maximum is 36MHz */
+#define I2C_CR2_FREQ_36MHZ         0x24UL                                    /* The APB1 bus maximum is 36MHz */
 
 /**
  *  @brief I2C bitmask
@@ -55,13 +54,15 @@ typedef struct
 #define I2C_OAR1_ADDMODE           (1UL << 15U)                              /* Select amount of Slave 7 bit-add or 10 bit-add */
 #define I2C_DR_MASK                0xFFUL
 
-#define I2C_SR1_TXE                (1UL << 7U)
+#define I2C_SR1_TXE                (1UL << 7U)                               /*!<(r) Data transmit empty */
 #define I2C_SR1_RXNE               (1UL << 6U)
 #define I2C_SR1_STOPF              (1UL << 5U)
-#define I2C_SR1_SB                 1UL
+#define I2C_SR1_BTF                (1UL << 2U)                               /* !<(r) Byte transfer finished */
+#define I2C_SR1_ADDR               (1UL << 1U)                               /* !<(r) Read status of Address bit & Read/Write bit*/
+#define I2C_SR1_SB                 1UL                                       /* !<(r) Read status of START condition */
 
-#define I2C_SR2_TRA                (1UL << 2U)                               /* Read transmitter/receiver */
-#define I2C_SR2_MSL                1UL                                       /* Master/Slave mode */
+#define I2C_SR2_TRA                (1UL << 2U)                               /* !<(r) Transmitter/receiver */
+#define I2C_SR2_MSL                1UL                                       /* !<(r) Master/Slave mode */
 
 #define I2C_TRISE_MASK             0x3FUL
 

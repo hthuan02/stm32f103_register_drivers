@@ -14,38 +14,22 @@ void gpio_init()
 	/* Enable GPIOA peripheral clock */
     rcc_gpioa_clock_enable();
 
-    GPIOA->CRH &= ~ (GPIOA_CRH_PA9_MASK |
-                     GPIOA_CRH_PA10_MASK);
+    GPIOA->CRH &= ~ (GPIO_CRH_PIN9 |
+                     GPIO_CRH_PIN10);
     
-    GPIOA->CRL &= ~GPIOA_CRL_PA0_MASK;
+    GPIOA->CRL &= ~GPIO_CRL_PIN_0;
 
     // Output, 2Mhz to blink led
-    GPIOA->CRH |= (GPIOA_CRH_MODE9_OUTPUT_2MHZ |
-                   GPIOA_CRH_CNF9_OUTPUT_PP |
-                   GPIOA_CRH_MODE10_OUTPUT_2MHZ |
-                   GPIOA_CRH_CNF10_OUTPUT_PP);
+    GPIOA->CRH |= (GPIO_CRH_MODE9_OUTPUT_2MHZ |
+                   GPIO_CRH_CNF9_OUTPUT_PP |
+                   GPIO_CRH_MODE10_OUTPUT_2MHZ |
+                   GPIO_CRH_CNF10_OUTPUT_PP);
     
    
-    GPIOA->CRL |= GPIOA_CRL_CNF0_INPUT_PULL |
-                  GPIOA_CRL_CNF1_INPUT_PULL;
+    GPIOA->CRL |= GPIO_CRL_CNF0_INPUT_PULL |
+                  GPIO_CRL_CNF1_INPUT_PULL;
     
-    /**
-     *  Select pull-down
-     *  When we use buttton at pull down state
-     *  Diagram: PA0 - Button - 3.3V
-     *
-     *  Pull down with (PUSH) button=1
-     */
-//    GPIOA->ODR &= ~(1U << 0);
-
-
-    /** ---------------- Popular ----------------
-     *  Select pull-up
-     *  When we use buttton at pull up state
-     *  Diagram: PA0 - Button - GND
-     *
-     *  Pull up with (PUSH) button=0
-     */
+                  
      GPIOA->ODR |= (1UL << 0U |
                     1UL << 1U);
 

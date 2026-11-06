@@ -16,8 +16,11 @@
 	******************************************************************************
 	*/
 
-
-#include "../Inc/main.h"
+#include "rcc.h"
+#include "gpio.h"
+#include "timer.h"
+#include "usart.h"
+#include "i2c.h"
 
 int main (void)
 {
@@ -30,39 +33,27 @@ int main (void)
 	GPIOA->BSRR = (3UL << 9U);
 
 	timer2_init();
-	usart2_init();
-	usart2_frame_config();
+	usart_pins_init();
+	usart_frame_config();
 
 	while (1)
 	{	
-		data_rx = usart2_receive_char();
+		data_rx = usart_receive_char();
 
-		// if (data_rx == 'S')
-		// {
-		// 	GPIOA->BRR = (3UL << 9U);
-		// 	usart2_transmit_string("TURN ON LED PA9 PA10 \r\n");
-		// }
-
-		// else if (data_rx == 'T')
-		// {
-		// 	GPIOA->BSRR = (3UL << 9U);
-		// 	usart2_transmit_string("TURN OFF LED PA9 PA10 \r\n");
-		// }
-		
 		switch (data_rx)
 		{
 		case 'S':
 			GPIOA->BRR = (3UL << 9U);
-			usart2_transmit_string("- Turn on the led PA9 & PA10\n");	
+			usart_transmit_string("- Turn on the led PA9 & PA10\n");	
 			break;
 		
 		case 'T':
 			GPIOA->BSRR = (3UL << 9U);
-			usart2_transmit_string("- Turn off the led PA9 & PA10\n");
+			usart_transmit_string("- Turn off the led PA9 & PA10\n");
 			break;
 
 		default:
-			usart2_transmit_string("- Please try again!\n");
+			usart_transmit_string("- Please try again!\n");
 			break;
 		}
 

@@ -118,5 +118,6 @@ typedef struct
  */
 #define RCC_APB1ENR_TIM2EN              (1UL << 0U)
 #define RCC_APB1ENR_USART2EN            (1UL << 17U)
+#define RCC_APB1ENR_I2C1EN              (1UL << 21U)
 
 #endif /* STM32_RCC_H_ */

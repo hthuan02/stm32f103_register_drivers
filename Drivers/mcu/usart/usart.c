@@ -15,24 +15,23 @@
  *         This function enable the clock for USART2 and 
  *         configures PA2, PA3 pins for use peripherals.
  */
-void usart2_init (void)
+void usart_pins_init (void)
 {
-    /* Enable clock for USART2 */
+    /* Enable clock peripherals */
     rcc_usart2_clock_enable();
-
-    /* Enable clock for GPIOA */
 	rcc_gpioa_clock_enable();
 
     /* Reset PA2 PA3*/
-    GPIOA->CRL &= ~(GPIOA_CRL_PA2_MASK | GPIOA_CRL_PA3_MASK);
+    GPIOA->CRL &= ~(GPIO_CRL_PIN_2 | GPIO_CRL_PIN_3);
+    
     
     /* PA2_tx */
-    GPIOA->CRL |= GPIOA_CRL_MODE2_OUTPUT_2MHZ;
-    GPIOA->CRL |= GPIOA_CRL_CNF2_AF_PP;
+    GPIOA->CRL |= GPIO_CRL_MODE2_OUTPUT_2MHZ;
+    GPIOA->CRL |= GPIO_CRL_CNF2_AF_PP;
 
     /* PA3_rx */
-    GPIOA->CRL |= GPIOA_CRL_MODE3_INPUT;
-    GPIOA->CRL |= GPIOA_CRL_CNF3_INPUT_FLOATING;
+    GPIOA->CRL |= GPIO_CRL_MODE3_INPUT;
+    GPIOA->CRL |= GPIO_CRL_CNF3_INPUT_FLOATING;
 
 }
 
@@ -47,7 +46,7 @@ void usart2_init (void)
  * 
  *  @return usart_brr
  */
-static uint32_t usart2_calculate_baudrate (uint32_t pclk_hz, uint32_t baud)
+static uint32_t usart_calculate_baudrate (uint32_t pclk_hz, uint32_t baud)
 {
     uint32_t mantissa = 0;
     uint32_t fraction = 0;
@@ -77,13 +76,13 @@ static uint32_t usart2_calculate_baudrate (uint32_t pclk_hz, uint32_t baud)
  *         Modify USART frame, The a frame USART include 
  *         (START bits - DATA bits - PARITY bits - STOP bits).
  */
-void usart2_frame_config (void)
+void usart_frame_config (void)
 {
     /* 1. Disable USART2 */
     USART2->CR1 &= ~USART_CR1_UE;
 
     /* 2. Modify Baudrate */
-    USART2->BRR = usart2_calculate_baudrate (36000000U, 9600U);
+    USART2->BRR = usart_calculate_baudrate (36000000U, 9600U);
 
     /* 3. Frame usart config */
     USART2->CR1 &= ~USART_CR1_M;                            /* Select data bit is 8 bits */
@@ -100,7 +99,7 @@ void usart2_frame_config (void)
  * 
  *  @param data
  */
-void usart2_transmit_char(uint32_t data)
+void usart_transmit_char(uint32_t data)
 {
     while ((USART2->SR & USART_SR_TXE) == 0)
     {
@@ -113,7 +112,7 @@ void usart2_transmit_char(uint32_t data)
  *          
  *  @param data
  */
-uint32_t usart2_receive_char(void)
+uint32_t usart_receive_char(void)
 {
     while ((USART2->SR & USART_SR_RXNE) == 0)
     {
@@ -124,7 +123,7 @@ uint32_t usart2_receive_char(void)
     return data;
 }
 
-void usart2_transmit_string(const char *str)
+void usart_transmit_string(const char *str)
 {   
     /* Kiểm tra con trỏ */
     if (str == NULL)
@@ -135,7 +134,7 @@ void usart2_transmit_string(const char *str)
     /* Kiểm tra kí tự kết thúc */
     while (*str != '\0')
     {
-        usart2_transmit_char((uint32_t) *str);
+        usart_transmit_char((uint32_t) *str);
         str++;                                                      /* Hậu tố, tăng kí tự tiếp theo */ 
     }
     

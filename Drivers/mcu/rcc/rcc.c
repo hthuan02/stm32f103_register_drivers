@@ -88,3 +88,8 @@ void rcc_usart2_clock_enable(void)
 {
     RCC->APB1ENR |= RCC_APB1ENR_USART2EN;
 }
+
+void rcc_i2c1_clock_enable(void)
+{
+    RCC->APB1ENR |= RCC_APB1ENR_I2C1EN;
+}
